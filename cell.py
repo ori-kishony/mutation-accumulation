@@ -26,8 +26,23 @@ class Cell(object):
     def from_cell(cls, cell):
         return Cell(cell.dna_sequence.copy(), cell.mutation_rate)
 
-    @classmethod
-    def divide(cls, cell, n_offspring: int = 2):
-        cells = [Cell.from_cell(cell).mutate() for n in range(n_offspring)]
+
+    def divide(self, n_offspring: int = 2):
+        cells = [Cell.from_cell(self) for n in range(n_offspring)]
+        for cell in cells:
+            cell.mutate()
         return cells
 
+def main():
+    DNA_SIZE = int(1e6)
+    mutation_rate = 1e-5
+    dna_sequence = rng.choice(Cell.N_BASES, DNA_SIZE)
+    cell = Cell(dna_sequence, mutation_rate)
+    children = cell.divide()
+    for n, child in enumerate(children):
+        n_mutations = (child.dna_sequence != cell.dna_sequence).sum()
+        print(f'The number of mutations for child {n} is: {n_mutations}')
+    pass
+
+if __name__ == '__main__':
+    main()
