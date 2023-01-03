@@ -35,7 +35,7 @@ class Cell(object):
 
 def main():
     DNA_SIZE = int(1e6)
-    mutation_rate = 1e-5
+    mutation_rate = 3e-6
     dna_sequence = rng.choice(Cell.N_BASES, DNA_SIZE)
     cell = Cell(dna_sequence, mutation_rate)
     children = cell.divide()
