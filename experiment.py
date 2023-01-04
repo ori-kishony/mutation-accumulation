@@ -3,8 +3,10 @@ from numpy.random import default_rng
 
 rng = default_rng(12345)
 
+
 class Experiment(object):
     DEFAULT_BOTTLENECK_SIZE = 1
+
     def __init__(self, cells: list[Cell]):
         self.cells = cells
 
@@ -45,6 +47,7 @@ def main():
 
     n_mutations = (cell_final.dna_sequence != cell.dna_sequence).sum()
     print(f'The number of mutations for final cell is: {n_mutations}')
+
 
 if __name__ == '__main__':
     main()
