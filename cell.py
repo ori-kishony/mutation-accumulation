@@ -1,5 +1,4 @@
 import numpy as np
-import copy
 from numpy.random import default_rng
 
 rng = default_rng(12345)
@@ -20,18 +19,18 @@ class Cell(object):
              p_mutation_per_change,
              p_mutation_per_change]
         mutations = rng.choice(self.n_bases, self.dna_sequence.shape, p=p)
-        self.dna_sequence = (self.dna_sequence + mutations) % self.n_bases\
+        self.dna_sequence = (self.dna_sequence + mutations) % self.n_bases
 
     @classmethod
     def from_cell(cls, cell):
         return Cell(cell.dna_sequence.copy(), cell.mutation_rate)
-
 
     def divide(self, n_offspring: int = 2):
         cells = [Cell.from_cell(self) for n in range(n_offspring)]
         for cell in cells:
             cell.mutate()
         return cells
+
 
 def main():
     DNA_SIZE = int(1e6)
@@ -43,6 +42,7 @@ def main():
         n_mutations = (child.dna_sequence != cell.dna_sequence).sum()
         print(f'The number of mutations for child {n} is: {n_mutations}')
     pass
+
 
 if __name__ == '__main__':
     main()
