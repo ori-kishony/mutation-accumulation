@@ -1,5 +1,5 @@
 from experiment import Experiment
-from cell import Cell
+from cell import Cell, FitnessCell
 import numpy as np
 from numpy.random import default_rng
 import matplotlib.pyplot as plt
@@ -16,9 +16,9 @@ N_EXPERIMENTS = 10
 
 def main():
     dna_sequence = rng.choice(Cell.N_BASES, DNA_SIZE)
-    base_cell = Cell(dna_sequence, MR)
+    base_cell = FitnessCell(dna_sequence, MR)
 
-    experiments = [Experiment([Cell.from_cell(base_cell)]) for i in range(N_EXPERIMENTS)]
+    experiments = [Experiment([FitnessCell.from_cell(base_cell)]) for i in range(N_EXPERIMENTS)]
     for n, experiment in enumerate(experiments):
         print(f'experiment: {n}')
         experiment.do_full_experiment(N_CYCLES, N_GENERATIONS, BOTTLENECK_SIZE)

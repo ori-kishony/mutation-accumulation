@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import Callable, Optional
 import numpy as np
 from numpy.random import default_rng
@@ -23,7 +24,7 @@ class Cell(object):
         self.dna_sequence = (self.dna_sequence + mutations) % self.n_bases
 
     @classmethod
-    def from_cell(cls, cell):
+    def from_cell(cls, cell: Cell):
         return Cell(cell.dna_sequence.copy(), cell.mutation_rate)
 
     def divide(self, n_offspring: int = 2):
@@ -42,7 +43,7 @@ class FitnessCell(Cell):
         self.ref_dna_sequence = ref_dna_sequence
 
     @classmethod
-    def genetic_fitness(cls, cell):
+    def genetic_fitness(cls, cell: FitnessCell):
         return cls.genetic_similarity_fitness(cell.dna_sequence, cell.ref_dna_sequence)
 
     @staticmethod
@@ -59,6 +60,11 @@ class FitnessCell(Cell):
             fitness = fitness_function(self)
         n_offspring = rng.choice(np.arange(int(fitness), int(fitness) + 2), p=[1 - (fitness % 1), fitness % 1])
         return super().divide(n_offspring=n_offspring)
+
+    @classmethod
+    def from_cell(cls, cell: FitnessCell):
+        return FitnessCell(cell.dna_sequence.copy(), cell.mutation_rate, n_bases=cell.n_bases,
+                           ref_dna_sequence=cell.ref_dna_sequence)
 
 
 def main():

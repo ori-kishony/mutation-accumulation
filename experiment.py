@@ -1,4 +1,4 @@
-from cell import Cell
+from cell import Cell, FitnessCell
 from numpy.random import default_rng
 
 rng = default_rng(12345)
