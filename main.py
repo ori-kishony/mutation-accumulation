@@ -6,16 +6,16 @@ import matplotlib.pyplot as plt
 from scipy.stats import poisson
 rng = default_rng(12345)
 
-DNA_SIZE = int(1e4)
-MR = 4e-6
+DNA_SIZE = int(1e3)
+MR = 4e-3
 N_CYCLES = 10
-N_GENERATIONS = 8
-BOTTLENECK_SIZE = 1
+N_GENERATIONS = 6
+BOTTLENECK_SIZE = 20
 N_EXPERIMENTS = 10
 
 
 def main():
-    dna_sequence = rng.choice(Cell.N_BASES, DNA_SIZE)
+    dna_sequence = rng.choice(Cell.N_BASES, DNA_SIZE).astype(np.int8)
     base_cell = FitnessCell(dna_sequence, MR)
 
     experiments = [Experiment([FitnessCell.from_cell(base_cell)]) for i in range(N_EXPERIMENTS)]
@@ -27,7 +27,7 @@ def main():
     num_mutations = np.zeros(N_EXPERIMENTS)
     for i in range(N_EXPERIMENTS):
         num_mutations[i] = (final_cells[i].dna_sequence != base_cell.dna_sequence).sum()
-    plt.hist(num_mutations, bins=0.5 + np.arange(-1, 30))
+    plt.hist(num_mutations, bins=0.5 + np.arange(-1, 50, 2))
     plt.show()
 
     pass
